@@ -1,56 +1,67 @@
-YlSlide»ÃµÆ²å¼ş
+ï»¿YlSlideå¹»ç¯æ’ä»¶
 ---
-### »ù±¾ÓÃ·¨£º
+### åŸºæœ¬ç”¨æ³•ï¼š
 
 ---
 
-1¡¢ÏÈÒıÈëjquery¿â¡¢YlSlide²å¼ş¼°ÒÀÀµµÄcssÎÄ¼ş
+1ã€å…ˆå¼•å…¥jqueryåº“ã€YlSlideæ’ä»¶åŠä¾èµ–çš„cssæ–‡ä»¶
 ```
 <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="js/jquery.Yl.Slide.min.js"></script>
 <link rel="stylesheet" href="css/css.css" type="text/css">
 ```
-2¡¢JS²¿·Ö
+2ã€JSéƒ¨åˆ†
 
 ```
 			$(document).ready(function() {
-				//»ù±¾ÓÃ·¨
+				//åŸºæœ¬ç”¨æ³•
 				$('.Yl-container').YlSlide({
-					wrapper:'.Yl-wrapper',//°ü×°²ã
-					slideClass:'.Yl-slide',//Ñ­»·²ã
-					stylePrefix:'.Yl-',//Ñ­»·²ã¸½¼ÓÑùÊ½Ç°×º(ÈçÒªĞŞ¸Ä¶ÔÓ¦µÄCSSÒ²ĞèĞŞ¸Ä)
-					slideLength:3,//ÊÓÍ¼¸öÊı
-					pages:true,//ÊÇ·ñ¿ªÆô·ÖÒ³
-					pagination:'.Yl-pagination',//·ÖÒ³ÑùÊ½
-					pagingSelect:'.Yl-pagination-bullet-active',//·ÖÒ³Ñ¡ÖĞÑùÊ½
-					autoplay:5000,//Ã¿¸öÊÓÍ¼ÇĞ»»ºÁÃëÊı	
-					imgTemplate:{//Í¼Æ¬Ä£°å
+					wrapper:'.Yl-wrapper',//åŒ…è£…å±‚
+					slideClass:'.Yl-slide',//å¾ªç¯å±‚
+					stylePrefix:'.Yl-',//å¾ªç¯å±‚é™„åŠ æ ·å¼å‰ç¼€(å¦‚è¦ä¿®æ”¹å¯¹åº”çš„CSSä¹Ÿéœ€ä¿®æ”¹)
+					slideLength:3,//è§†å›¾ä¸ªæ•°
+					pages:true,//æ˜¯å¦å¼€å¯åˆ†é¡µ
+					pagination:'.Yl-pagination',//åˆ†é¡µæ ·å¼
+					pagingSelect:'.Yl-pagination-bullet-active',//åˆ†é¡µé€‰ä¸­æ ·å¼
+					autoplay:5000,//æ¯ä¸ªè§†å›¾åˆ‡æ¢æ¯«ç§’æ•°	
+					imgTemplate:{//å›¾ç‰‡æ¨¡æ¿
 						0:['<div class="Yl-img0"></div>'],
 						1:['<div class="Yl-img1"></div>'],
 						2:['<div class="Yl-img2"></div>']
 					},
-					fontTemplate:{//ÎÄ×ÖÄ£°å
-					0:['<div class="Yl-font0">ALL ABOUT US</div>','<div class="Yl-font1">¡°³É¾ÍÖĞ¹úÈËµÄÊÂÒµ¡±ÊÇÎÒÃÇØ¨¹Å²»±äµÄÊ¹Ãü</div>','<div class="Yl-font2">Ö»ÎªÒ»½¨Ìá·Ö</div>'],
-					1:['<div class="Yl-font0">SINCE 2002</div>','<div class="Yl-font1">Ê®ÎåÄê×¨×¢Ò»½¨½ÌÑ§£¬ĞĞÒµµÄÙ®Ù®Õß</div>','<div class="Yl-font2">Ö»ÎªÒ»½¨Ìá·Ö</div>'],
-					2:['<div class="Yl-font0">CHANCE FOR YOU</div>','<div class="Yl-font1">¸ü¸ßĞ§µÄÑ§Ï°·½Ê½£¬ÈÃÑ§Ô±»¨·Ñ¸üÉÙµÄÊ±¼ä</div>','<div class="Yl-font2">Ö»ÎªÒ»½¨Ìá·Ö</div>']
+					fontTemplate:{//æ–‡å­—æ¨¡æ¿
+					0:['<div class="Yl-font0">ALL ABOUT US</div>','<div class="Yl-font1">â€œæˆå°±ä¸­å›½äººçš„äº‹ä¸šâ€æ˜¯æˆ‘ä»¬äº˜å¤ä¸å˜çš„ä½¿å‘½</div>','<div class="Yl-font2">åªä¸ºä¸€å»ºæåˆ†</div>'],
+					1:['<div class="Yl-font0">SINCE 2002</div>','<div class="Yl-font1">åäº”å¹´ä¸“æ³¨ä¸€å»ºæ•™å­¦ï¼Œè¡Œä¸šçš„ä½¼ä½¼è€…</div>','<div class="Yl-font2">åªä¸ºä¸€å»ºæåˆ†</div>'],
+					2:['<div class="Yl-font0">CHANCE FOR YOU</div>','<div class="Yl-font1">æ›´é«˜æ•ˆçš„å­¦ä¹ æ–¹å¼ï¼Œè®©å­¦å‘˜èŠ±è´¹æ›´å°‘çš„æ—¶é—´</div>','<div class="Yl-font2">åªä¸ºä¸€å»ºæåˆ†</div>']
 					},
-					fontAnimationMode:{//ÎÄ×Ö¶¯»­Ä£Ê½
+					fontAnimationMode:{//æ–‡å­—åŠ¨ç”»æ¨¡å¼
 						0:['fadeInUp','fadeInUp','slideInLeft'],
 						1:['fadeInUp','fadeInUp','slideInLeft'],
 						2:['fadeInUp','fadeInUp','slideInLeft']
 					},
-					customTemplate:{//×Ô¶¨ÒåÄ£°å£¨¿ÉÓÃ×÷°´Å¥Ä£°å£©
-						0:['<div class="Yl-Button"><a href="javascript:void(0);">¿ªÆô×¨ÊôÄãµÄ±¸¿¼Ö®ÂÃ</a></div>'],
-						1:['<div class="Yl-Button"><a href="javascript:void(0);">¿ªÆô×¨ÊôÄãµÄ±¸¿¼Ö®ÂÃ</a></div>'],
-						2:['<div class="Yl-Button"><a href="javascript:void(0);">¿ªÆô×¨ÊôÄãµÄ±¸¿¼Ö®ÂÃ</a></div>']
+					customTemplate:{//è‡ªå®šä¹‰æ¨¡æ¿ï¼ˆå¯ç”¨ä½œæŒ‰é’®æ¨¡æ¿ï¼‰
+						0:['<div class="Yl-Button"><a href="javascript:void(0);">å¼€å¯ä¸“å±ä½ çš„å¤‡è€ƒä¹‹æ—…</a></div>'],
+						1:['<div class="Yl-Button"><a href="javascript:void(0);">å¼€å¯ä¸“å±ä½ çš„å¤‡è€ƒä¹‹æ—…</a></div>'],
+						2:['<div class="Yl-Button"><a href="javascript:void(0);">å¼€å¯ä¸“å±ä½ çš„å¤‡è€ƒä¹‹æ—…</a></div>']
 					},
-					callback:function(e){//Õû¸öDOM¼ÓÔØÍê³ÉºóµÄ»Øµ÷º¯Êı
+					resource:[//slideæ‰€éœ€çš„å›¾ç‰‡èµ„æº
+						'images/layer1.jpg',
+						'images/layer2.jpg',
+						'images/layer3.jpg'
+					],
+					loading:function(e){//åŠ è½½è¿‡ç¨‹ä¸­å›è°ƒå‡½æ•°
+						$("#Percent").text(e+'%'); //è®¾ç½®ç™¾åˆ†æ•°åˆ°DOMä¸Š
+						if (e == 100) {
+							$("#Percent").remove();
+						}
+					},
+					callback:function(e){//æ•´ä¸ªDOMåŠ è½½å®Œæˆåçš„å›è°ƒå‡½æ•°
 												
 					},
-					before: function(e) {//Ã¿¸öÊÓÍ¼ÇĞ»»Ç°µÄ»Øµ÷º¯Êı
+					before: function(e) {//æ¯ä¸ªè§†å›¾åˆ‡æ¢å‰çš„å›è°ƒå‡½æ•°
 						
 					}, 
-					after: function(e) {//Ã¿¸öÊÓÍ¼ÇĞ»»Íê³ÉºóµÄ»Øµ÷º¯Êı
+					after: function(e) {//æ¯ä¸ªè§†å›¾åˆ‡æ¢å®Œæˆåçš„å›è°ƒå‡½æ•°
 						
 					}
 				});
@@ -58,46 +69,61 @@ YlSlide»ÃµÆ²å¼ş
 
 
 ```
-3.½çÃæ²¿·Ö
+3.ç•Œé¢éƒ¨åˆ†
 
 ```
-<div class="Yl-container"></div>
+<div class="Yl-container">
+	<div id="Percent"></div> //é¢„åŠ è½½ç™¾åˆ†æ¯”æ˜¾ç¤ºå±‚
+</div>
 ```
 
 ---
-### Ğ§¹ûÕ¹Ê¾
+### æ•ˆæœå±•ç¤º
 
-1. »ù±¾Õ¹Ê¾[£ºhttps://yanliangnh.github.io/YlSlide/index.html](https://yanliangnh.github.io/YlSlide/index.html) 
-2. Ò»Ò³¶àÆÁ[£ºhttps://yanliangnh.github.io/YlSlide/multiScreen.html](https://yanliangnh.github.io/YlSlide/multiScreen.html)
-3. cmd&amdÄ£Ê½[£ºhttps://yanliangnh.github.io/YlSlide/YlSlideSeajs.html](https://yanliangnh.github.io/YlSlide/YlSlideSeajs.html)
+1. åŸºæœ¬å±•ç¤º[ï¼šhttps://yanliangnh.github.io/YlSlide/index.html](https://yanliangnh.github.io/YlSlide/index.html) 
+2. ä¸€é¡µå¤šå±[ï¼šhttps://yanliangnh.github.io/YlSlide/multiScreen.html](https://yanliangnh.github.io/YlSlide/multiScreen.html)
+3. cmd&amdæ¨¡å¼[ï¼šhttps://yanliangnh.github.io/YlSlide/YlSlideSeajs.html](https://yanliangnh.github.io/YlSlide/YlSlideSeajs.html)
 
 ---
 
-### »Øµ÷²¿·Ö
+### å›è°ƒéƒ¨åˆ†
 ```
-callback:function(e){//Õû¸öDOM¼ÓÔØÍê³ÉºóµÄ»Øµ÷º¯Êı
-	//eÎªÕû¸ö²å¼şµÄËùÓĞ·½·¨ºÍÊôĞÔ£¬×ÔĞĞÊäÈëconsole.log£¨e£©²é¿´¾ßÌå×Ô¼ºĞèÒªµÄ£¡										
+callback:function(e){//æ•´ä¸ªDOMåŠ è½½å®Œæˆåçš„å›è°ƒå‡½æ•°
+	//eä¸ºæ•´ä¸ªæ’ä»¶çš„æ‰€æœ‰æ–¹æ³•å’Œå±æ€§ï¼Œè‡ªè¡Œè¾“å…¥console.logï¼ˆeï¼‰æŸ¥çœ‹å…·ä½“è‡ªå·±éœ€è¦çš„ï¼										
 }
 				
 ```
 
 
 ```
-before: function(e) {//Ã¿¸öÊÓÍ¼ÇĞ»»Ç°µÄ»Øµ÷º¯Êı
-    //´Ë´¦µÄeÎª¿ØÖÆµ±Ç°ÊÓÍ¼µÄ
-    //µ±Ç°ĞòºÅ£ºe.index
-    //×ÜÊÓÍ¼£ºe.total
-    //Õû¸ö°ü×°²ãµÄDOM¶ÔÏó:e.ele
-    //Í£Ö¹²¥·Å£ºe.pause()
-    //¿ªÊ¼²¥·Å£ºe.play()
+before: function(e) {//æ¯ä¸ªè§†å›¾åˆ‡æ¢å‰çš„å›è°ƒå‡½æ•°
+    //æ­¤å¤„çš„eä¸ºæ§åˆ¶å½“å‰è§†å›¾çš„
+    //å½“å‰åºå·ï¼še.index
+    //æ€»è§†å›¾ï¼še.total
+    //æ•´ä¸ªåŒ…è£…å±‚çš„DOMå¯¹è±¡:e.ele
+    //åœæ­¢æ’­æ”¾ï¼še.pause()
+    //å¼€å§‹æ’­æ”¾ï¼še.play()
 }
 ```
 
 ```
-after: function(e) {//Ò³ÃæÇĞ»»Íê³ÉºóµÄ»Øµ÷º¯Êı
-    //Í¬before»Øµ÷º¯ÊıÓÃ·¨						
+after: function(e) {//é¡µé¢åˆ‡æ¢å®Œæˆåçš„å›è°ƒå‡½æ•°
+    //åŒbeforeå›è°ƒå‡½æ•°ç”¨æ³•						
 }
 ```
+```
+resource:[//slideæ‰€éœ€çš„å›¾ç‰‡èµ„æº
+	'images/layer1.jpg',
+	'images/layer2.jpg',
+	'images/layer3.jpg'
+]
 
+loading:function(e){//åŠ è½½è¿‡ç¨‹ä¸­å›è°ƒå‡½æ•°
+	$("#Percent").text(e+'%'); //è®¾ç½®ç™¾åˆ†æ•°åˆ°DOMä¸Š
+		if (e == 100) {
+			$("#Percent").remove();
+		}
+}
 
+```
 

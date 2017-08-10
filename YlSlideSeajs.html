@@ -10,7 +10,7 @@
 seajs.config({
 	alias:{
 		'jquery': 'jquery-1.9.1.module.min',//加载支持module的jquery(需要自己修改支持CMD模式,具体方法可以自行百度)
-    	'slide': 'jquery.Yl.Slide.js'
+    	'slide': 'jquery.Yl.Slide.min.js'
 	}
 });
 
@@ -47,6 +47,17 @@ seajs.use('jquery', function($) {
 						0:['<div class="Yl-Button"><a href="javascript:void(0);">开启专属你的备考之旅</a></div>'],
 						1:['<div class="Yl-Button"><a href="javascript:void(0);">开启专属你的备考之旅</a></div>'],
 						2:['<div class="Yl-Button"><a href="javascript:void(0);">开启专属你的备考之旅</a></div>']
+					},
+					resource:[//slide所需的图片资源
+						'images/layer1.jpg',
+						'images/layer2.jpg',
+						'images/layer3.jpg'
+					],
+					loading:function(e){//加载过程中回调函数
+						$("#Percent").text(e+'%'); //设置百分数到DOM上
+						if (e == 100) {
+							$("#Percent").remove();
+						}
 					},
 					callback:function(e){//整个DOM加载完成后的回调函数
 												
@@ -109,11 +120,12 @@ a,a:hover{text-decoration:none;}
 .Yl-container .Yl-wrapper .Yl-slide .slideInLeft.act i b{width:100%;opacity:1;}
 @keyframes Yl-img_an{0%{transform:scale(1,1);}100%{transform:scale(1.5,1.5);}
 }
+#Percent{width: 100%; height: 550px; line-height: 550px; overflow: hidden; position: relative; text-align: center; font-size: 16px;}
 </style>
 
 		
 		<div class="Yl-container">	
-			
+			<div id="Percent"></div>
 		</div>
 
 

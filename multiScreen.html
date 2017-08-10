@@ -44,6 +44,17 @@
 						1:['<div class="Yl-Button"><a href="javascript:void(0);">开启专属你的备考之旅</a></div>'],
 						2:['<div class="Yl-Button"><a href="javascript:void(0);">开启专属你的备考之旅</a></div>']
 					},
+					resource:[//slide所需的图片资源
+						'images/layer1.jpg',
+						'images/layer2.jpg',
+						'images/layer3.jpg'
+					],
+					loading:function(e){//加载过程中回调函数
+						$("#Percent").text(e+'%'); //设置百分数到DOM上
+						if (e == 100) {
+							$("#Percent").remove();
+						}
+					},
 					callback:function(e){
 						//整个dom加载完成后的回调函数、切换动画前的回调						
 					},
@@ -90,6 +101,17 @@
 						2:['<div class="Yl-Button"><a href="javascript:void(0);">开启专属你的备考之旅2</a></div>'],
 						3:['<div class="Yl-Button"><a href="javascript:void(0);">开启专属你的备考之旅2</a></div>']
 					},
+					resource:[//slide所需的图片资源
+						'images/layer1.jpg',
+						'images/layer2.jpg',
+						'images/layer3.jpg'
+					],
+					loading:function(e){//加载过程中回调函数
+						$("#Percent2").text(e+'%'); //设置百分数到DOM上
+						if (e == 100) {
+							$("#Percent2").remove();
+						}
+					},
 					callback:function(e){
 						//整个dom加载完成后的回调函数、切换动画前的回调					
 					},
@@ -110,13 +132,13 @@
 
 
 		<div class="Yl-container">		
-			
+			<div id="Percent"></div>
 		</div>	
 		
 		
 		一页多个切换
 		<div class="Yl-container2">		
-			
+			<div id="Percent2"></div>
 		</div>
 
 	</body>
