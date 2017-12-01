@@ -19,11 +19,14 @@
 					wrapper:'.Yl-wrapper',//包装层
 					slideClass:'.Yl-slide',//循环层
 					stylePrefix:'.Yl-',//循环层附加样式前缀(如要修改对应的CSS也需修改)
+					styleFont:'.Yl-font',//文字模板样式前缀(如要修改对应的CSS也需修改)
 					slideLength:3,//视图个数
 					pages:true,//是否开启分页
 					pagination:'.Yl-pagination',//分页样式
 					pagingSelect:'.Yl-pagination-bullet-active',//分页选中样式
-					autoplay:5000,//每个视图切换毫秒数	
+					autoplay:5000,//每个视图切换毫秒数
+					enableDom:true,//是否开始手动dom布局（默认是ture 自动生成布局，false为手动布局）
+					enableLoading:true,//是否开启loading预加载(默认是开启，如果不需要请删除下边loading回调函数)
 					imgTemplate:{//图片模板
 						0:['<div class="Yl-img0"></div>'],
 						1:['<div class="Yl-img1"></div>'],
@@ -44,11 +47,6 @@
 						1:['<div class="Yl-Button"><a href="javascript:void(0);">开启专属你的备考之旅</a></div>'],
 						2:['<div class="Yl-Button"><a href="javascript:void(0);">开启专属你的备考之旅</a></div>']
 					},
-					resource:[//slide所需的图片资源
-						'images/layer1.jpg',
-						'images/layer2.jpg',
-						'images/layer3.jpg'
-					],
 					loading:function(e){//加载过程中回调函数
 						$("#Percent").text(e+'%'); //设置百分数到DOM上
 						if (e == 100) {
@@ -72,18 +70,16 @@
 3.界面部分
 
 ```
-<div class="Yl-container">
-	<div id="Percent"></div> //预加载百分比显示层
-</div>
+<div class="Yl-container"></div>
 ```
 
 ---
 ### 效果展示
 
-1. 基本展示[：https://yanliangnh.github.io/YlSlide/index.html](https://yanliangnh.github.io/YlSlide/index.html) 
-2. 一页多屏[：https://yanliangnh.github.io/YlSlide/multiScreen.html](https://yanliangnh.github.io/YlSlide/multiScreen.html)
-3. cmd&amd模式[：https://yanliangnh.github.io/YlSlide/YlSlideSeajs.html](https://yanliangnh.github.io/YlSlide/YlSlideSeajs.html)
-
+1. 基本展示：[https://yanliangnh.github.io/YlSlide/index.html](https://yanliangnh.github.io/YlSlide/index.html) 
+2. 一页多屏：[https://yanliangnh.github.io/YlSlide/multiScreen.html](https://yanliangnh.github.io/YlSlide/multiScreen.html)
+3. cmd&amd模式：[https://yanliangnh.github.io/YlSlide/YlSlideSeajs.html](https://yanliangnh.github.io/YlSlide/YlSlideSeajs.html)
+4.手动布局：[https://yanliangnh.github.io/YlSlide/manualLayout.html](https://yanliangnh.github.io/YlSlide/manualLayout.html) 
 ---
 
 ### 回调部分
@@ -111,19 +107,11 @@ after: function(e) {//页面切换完成后的回调函数
     //同before回调函数用法						
 }
 ```
-```
-resource:[//slide所需的图片资源
-	'images/layer1.jpg',
-	'images/layer2.jpg',
-	'images/layer3.jpg'
-]
-
-loading:function(e){//加载过程中回调函数
-	$("#Percent").text(e+'%'); //设置百分数到DOM上
-		if (e == 100) {
-			$("#Percent").remove();
-		}
-}
 
 ```
+（如果需要追求秒显幻灯的话建议设置enableDom:false 及 enableLoading:false 然后手动 div结构 请参考 手动布局页面https://yanliangnh.github.io/YlSlide/manualLayout.html）
+
+```
+
+
 

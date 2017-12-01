@@ -2,27 +2,37 @@
  2017/08/10 智取小师妹
  QQ/微信：65268828
  mail:yanliangnhai@163.com
- 如果在使用过程中有bug或改进的问题请联系我！ 
- Edition:v1.1
+ 如果在使用过程中有bug或改进的问题请联系我！
+
+ Edition:v1.2 //2017-11-28
+ 1.修复堆栈溢出bug
+ 2.增加是否启用loading功能
+ 3.增加是否启用模板自动生成
+ （如果需要追求秒显幻灯的话建议设置enableDom:false 及 enableLoading:false 然后手动 div结构 ）
+
+ Edition:v1.1 //2017-09-22
  1.优化相关代码
  2.增加loading功能
  */
  ;(function($, window, document, undefined) {
 	//定义ylSlide的构造函数
 	var ylSlide = function(ele, opt) {
-		this.edition='v1.1';
+		this.edition='v1.2';
 		this.$element = ele; //选择器
 		this.pic_index = 0;
-		this.setTimes = null;
+		//this.setTimes = null;
 		this.defaults = {
 			wrapper: '.Yl-wrapper', //包装层
 			slideClass: '.Yl-slide', //循环层
 			stylePrefix: '.Yl-', //循环层附加样式前缀
+			styleFont: '.Yl-font',//动画字体样式前缀
 			slideLength: 3, //视图个数
 			pages: true, //是否开启分页
 			pagination: '.Yl-pagination', //分页样式
 			pagingSelect: '.Yl-pagination-bullet-active', //分页选中样式
 			autoplay: 5000, //每个视图切换毫秒数
+			enableDom:true,//是否启用模板
+			enableLoading:true,//是否启用loading
 			imgTemplate: {}, //图片模板
 			fontTemplate: {}, //文字模板
 			fontAnimationMode: {}, //文字动画模式
@@ -33,7 +43,9 @@
 			before: function() {}, //每个视图切换前的回调函数
 			after: function() {} //每个视图切换完成后的回调函数			
 		};
-		this.options = $.extend({}, this.defaults, opt);		
+
+		this.options = $.extend({}, this.defaults, opt);
+
 	};
 	//定义ylSlide的方法
 	ylSlide.prototype = {
@@ -43,11 +55,14 @@
 				wrapper: self.options.wrapper,
 				slideClass: self.options.slideClass,
 				stylePrefix: self.options.stylePrefix,
+				styleFont: self.options.styleFont,
 				slideLength: self.options.slideLength,
 				pages: self.options.pages,
 				pagination: self.options.pagination,
 				pagingSelect: self.options.pagingSelect,
 				autoplay: self.options.autoplay,
+				enableDom: self.options.enableDom,
+				enableLoading: self.options.enableLoading,
 				imgTemplate: self.options.imgTemplate,
 				fontTemplate: self.options.fontTemplate,
 				fontAnimationMode: self.options.fontAnimationMode,
@@ -95,23 +110,44 @@
 					}
 				}
 			},
-			addTemp: function($selector, ele, Class, fontTemp, fontAnimationTemp) { //添加模板
+			addTemp: function($selector, ele, Class, fontTemp, fontAnimationTemp, enableDom) { //添加模板
+				//enableDom 手动模板开关				
 				var len = Object.keys(ele).length,
-				that = this;
-				for (var i = 0; i < len; i++) {
-					if (ele == fontTemp) {
+					that = this;
+				
+				if(enableDom == false ){
+
+					for (var i = 0; i < len; i++) {						
 						for (var k = 0; k < ele[i].length; k++) {
-							var $ele = $(ele[i][k]),
-							AniClass = fontAnimationTemp[i][k];
-							$ele.addClass(AniClass);
-							$selector.find(Class).eq(i).append($ele.html(
-								AniClass == 'slideInLeft' ?
-								that.setText_a($ele) :
-								that.setText($ele)
-								));
+							var $eleClass = $('.'+$(ele[i][k]).attr('class')),
+								$ele = $(ele[i][k]),
+								AniClass = fontAnimationTemp[i][k];
+								$eleClass.addClass(AniClass)							
+								$eleClass.html(							
+									AniClass == 'slideInLeft' ?
+									that.setText_a($ele) :
+									that.setText($ele)
+								);
+								
 						}
-					} else {
-						$selector.find(Class).eq(i).append(ele[i]);
+					}
+
+				}else{
+					for (var i = 0; i < len; i++) {
+						if (ele == fontTemp) {
+							for (var k = 0; k < ele[i].length; k++) {
+								var $ele = $(ele[i][k]),
+								AniClass = fontAnimationTemp[i][k];
+								$ele.addClass(AniClass);
+								$selector.find(Class).eq(i).append($ele.html(
+									AniClass == 'slideInLeft' ?
+									that.setText_a($ele) :
+									that.setText($ele)
+									));
+							}
+						} else {
+							$selector.find(Class).eq(i).append(ele[i]);
+						}
 					}
 				}
 			},
@@ -148,7 +184,8 @@
 				}
 				html = html.replace(/\^/g, "&nbsp;");
 				html = html.replace("> <", ">&nbsp;<");
-				e.html(html);
+				return html;
+				//e.html(html);
 			},
 			showtxt: function(e, delay) { //激活文字动画			
 				setTimeout(function() {
@@ -157,17 +194,39 @@
 			},
 			hidetxt: function(elements, e) { //移除文字激活
 				elements.find(e).find(".act").removeClass("act");
+			},
+			deconstructionTemplate: function(selector,className){//获取dom里的结构
+				var style = $(selector),
+					len = style.length,
+					obj = {};
+				for(var i=0; i<len; i++){
+					var s = $(style[i]).find('div'),
+						l = s.length,
+						m = 0;
+					obj[i] =[];
+					for(var k=0; k<l; k++){
+						if(s.eq(k).attr('class').indexOf(className)>-1){
+							obj[i][m] = s.eq(k)[0].outerHTML;
+							m++;
+						}						
+					};
+				};
+				return obj;				
 			}
 		},		
 		slide: {
-			start: function(elements, pic_index, options, util, fn) {
+			start: function(elements, pic_index, options, util, enableDom, fn) {
 				var self = this,
 				num = options.slideLength,
 				ele = elements.find(options.slideClass),
 				autoplay = options.autoplay,
+				enableDom = options.enableDom,
+				enableLoading = options.enableLoading,
 				imgTemplate = options.imgTemplate,
 				slideClass = options.slideClass,
 				stylePrefix = options.stylePrefix,
+				styleFont = options.styleFont,
+				styleFont = options.styleFont,
 				fontTemplate = options.fontTemplate,
 				pagination = options.pagination,
 				pagingSelect = options.pagingSelect,
@@ -175,11 +234,16 @@
 				after = options.after,
 				before = options.before;
 
-				self.setTimes = setTimeout(function() {
-					self.start(elements, pic_index, options, util, fn);
+				if(typeof enableDom == 'boolean'){
+					imgTemplate = util.deconstructionTemplate(options.slideClass,'Yl-img');
+					fontTemplate = util.deconstructionTemplate(options.slideClass,'Yl-font');
+				}
+
+				setTimes = setTimeout(function() {
+					self.start(elements, pic_index, options, util, enableDom, fn);
 				}, autoplay);
 
-				fn.call(self, elements, pic_index, options, util, self.setTimes);
+				fn.call(self, elements, pic_index, options, util, enableDom, setTimes);
 
 				var callObj = {
 					total: num,
@@ -190,7 +254,7 @@
 					},
 					play: function() {
 						self.setTimes = setTimeout(function() {
-							self.start(elements, pic_index, options, util, fn);
+							self.start(elements, pic_index, options, util, enableDom, fn);
 						}, autoplay);
 					}
 				};
@@ -198,27 +262,28 @@
 				util.hidetxt(elements, slideClass); //清除所有文字动画
 				self.removeImgStyle(elements, imgTemplate); //清除图片动画style				
 				self.addImgStyle(elements, imgTemplate, pic_index, autoplay); //添加图片动画style
-				self.fontImgActive(elements, util, imgTemplate, pic_index, stylePrefix, fontTemplate); //文字激活or图片动画			
+				self.fontImgActive(elements, util, imgTemplate, pic_index, stylePrefix, styleFont, fontTemplate); //文字激活or图片动画			
 				ele.eq(pic_index).fadeIn().siblings().fadeOut(); //开始动画				
 				self.tabIcon(elements, pagination, pic_index, splits(pagingSelect)); //切换分页小图标				
 				pic_index < num - 1 ? pic_index++ : pic_index = 0; //递归规则
 				after.call(self, callObj); //每屏播放动画之后回调
 			},
-			onClickTab: function(elements, pic_index, options, util, setTimes) {
-				var self = this;
-				elements.find(options.pagination + " span").on('click', function() {
+			onClickTab: function(elements, pic_index, options, util, enableDom, setTimes) {
+				var self = this;				
+				elements.find(options.pagination + " span").off("click").on('click', function(event) {
+					event.preventDefault();
 					var that = $(this),
 					i = that.index();
-					self.slide.closeSlide(setTimes); //停止定时器					
-					self.setTimes = setTimeout(function() {
-						self.slide.start(elements, i, options, util, self.slide.onClickTab.bind(self));
-					}, 200);
+					clearTimeout(setTimes);
+					setTimes = setTimeout(function() {
+						self.slide.start(elements, i, options, util, enableDom, self.slide.onClickTab.bind(self));
+					}, 50);
 				});
 			},
 			closeSlide: function(ele) {
 				clearTimeout(ele);
 			},
-			addImgStyle: function(elements, ele, i, play) { //添加图片动画style				
+			addImgStyle: function(elements, ele, i, play) { //添加图片动画style	
 				elements.find('.' + $($(ele[i])[0]).attr('class')).css({
 					'animation': 'Yl-img_an ' + parseInt(play / 1000 + 1) + 's forwards'
 				});
@@ -235,7 +300,7 @@
 			tabIcon: function(elements, pagination, pic_index, Select) {
 				elements.find(pagination + ' span').eq(pic_index).addClass(Select).siblings().removeClass(Select);
 			},
-			fontImgActive: function(elements, util, imgTemplate, pic_index, stylePrefix, fontTemplate) {
+			fontImgActive: function(elements, util, imgTemplate, pic_index, stylePrefix, styleFont, fontTemplate) {			
 				util.showtxt(elements.find('.' + $($(imgTemplate[pic_index])[0]).attr('class')), 0);
 				var p = Object.keys(fontTemplate).length,
 				k = 0,
@@ -243,9 +308,7 @@
 				for (; k < p; k++) {
 					var x = Object.keys(fontTemplate[k]).length;
 					for (; v < x; v++) {
-						util.showtxt(elements.find(stylePrefix + pic_index + " ." + $($(fontTemplate[k])[v]).attr('class')), 500);
-						util.showtxt(elements.find(stylePrefix + pic_index + " ." + $($(fontTemplate[k])[v]).attr('class')), 500);
-						util.showtxt(elements.find(stylePrefix + pic_index + " ." + $($(fontTemplate[k])[v]).attr('class')), 500);
+						util.showtxt(elements.find(stylePrefix + pic_index).find(styleFont + v), 500);						
 					}
 				}
 			}
@@ -283,38 +346,69 @@
 				self.setNum(percent,ele,fn);
 			}
 		},
-		render: function() {
-			var self = this;
-			if ($(self.$element.selector).length > 0) {
-				self.loads.res(self.options.resource,self.options.loading,function(e){
-					if(e==100){
-						self.decon(function(e) {
+		renderTemplate:function(){
+			var self=this;
+			self.decon(function(e) {
 							//创建包装层Yl-wrapper
 							self.$element.children().hasClass(self.util.splits(e.wrapper)) === false ?
 								self.util.eachs(self.$element, 1, self.util.splits(e.wrapper), 'div') : '';
 							//创建包装层下的循环层
 							self.$element.children(e.wrapper).children().hasClass(self.util.splits(e.slideClass)) === false ?
 								self.util.eachs(self.$element.children(e.wrapper), e.slideLength, self.util.splits(e.slideClass), 'div', '', '', self.util.splits(e.stylePrefix)) : '';
-							//是否创建分页层
-							e.pages === true ? (self.$element.find('div').hasClass(self.util.splits(e.pagination)) === false ?
-								(self.util.eachs(self.$element, 1, self.util.splits(e.pagination), 'div', 'end'), self.util.eachs(self.$element.find(e.pagination), e.slideLength, '', 'span', '')) :
-								'') : '';
 							//循环层内添加模板
-							self.util.obj([e.imgTemplate, e.fontTemplate, e.customTemplate], function(o) {
+							self.util.obj([e.imgTemplate, e.fontTemplate, e.customTemplate], function(o) {								
 								self.util.addTemp(self.$element, o, e.slideClass, e.fontTemplate, e.fontAnimationMode);
-							});
-							//移除文字激活
-							self.util.hidetxt(self.$element, e.slideClass);
-							//文字激活or图片动画
-							self.slide.fontImgActive(self.$element, self.util, e.imgTemplate, 0, e.stylePrefix, e.fontTemplate);
-						});
-						//创建页面完成后的回调函数
-						self.options.callback.call(self, self.defaults);
-						//启动切换slide			
-						self.slide.start(self.$element, self.pic_index, self.options, self.util, self.slide.onClickTab.bind(self));
+							});										
+			});	
+		},
+		renderEnable:function(x){
+			var self=this;
+			self.decon(function(e) {
+				if(typeof x !== 'undefined'){
+					//循环层内添加模板
+					self.util.obj([self.util.deconstructionTemplate(e.slideClass,'Yl-font')], function(o) {				
+						self.util.addTemp(self.$element, o, e.slideClass, e.fontTemplate, e.fontAnimationMode, e.enableDom);
+					});
+				}
+				//是否创建分页层
+				e.pages === true ? (self.$element.find('div').hasClass(self.util.splits(e.pagination)) === false ?
+					(self.util.eachs(self.$element, 1, self.util.splits(e.pagination), 'div', 'end'), self.util.eachs(self.$element.find(e.pagination), e.slideLength, '', 'span', '')) :
+					'') : '';
+				//移除文字激活
+				self.util.hidetxt(self.$element, e.slideClass);				
+				//文字激活or图片动画
+				self.slide.fontImgActive(self.$element, self.util, (typeof x !== 'undefined'?self.util.deconstructionTemplate(e.slideClass,'Yl-img'):e.imgTemplate), 0, e.stylePrefix, e.styleFont, (typeof x !== 'undefined'?self.util.deconstructionTemplate(e.slideClass,'Yl-font'):e.fontTemplate));
+
+				//创建页面完成后的回调函数
+				self.options.callback.call(self, self.defaults);
+
+				
+				//启动切换slide			
+				self.slide.start(self.$element, self.pic_index, self.options, self.util, (typeof x !== 'undefined'?e.enableDom:''), self.slide.onClickTab.bind(self));	
+				
+			});			
+		},
+		render: function() {
+			var self = this;
+			if ($(self.$element.selector).length > 0) {
+				if(self.options.enableLoading == false){
+					if(self.options.enableDom == false){
+						//self.renderTemplate();
+						self.renderEnable(self.options.fontTemplate);					
+					}else{
+						self.renderTemplate();
+						self.renderEnable();
 					}
-				});
-			} else {
+				}else{
+					self.loads.res(self.options.resource,self.options.loading,function(e){
+						if(e==100){
+							self.renderTemplate();
+							self.renderEnable();
+						}
+					});
+				}
+				
+			} else {			
 				console.log('Component failed！');
 			}
 		}
