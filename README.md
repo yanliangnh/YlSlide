@@ -79,7 +79,7 @@
 1. 基本展示：[https://yanliangnh.github.io/YlSlide/index.html](https://yanliangnh.github.io/YlSlide/index.html) 
 2. 一页多屏：[https://yanliangnh.github.io/YlSlide/multiScreen.html](https://yanliangnh.github.io/YlSlide/multiScreen.html)
 3. cmd&amd模式：[https://yanliangnh.github.io/YlSlide/YlSlideSeajs.html](https://yanliangnh.github.io/YlSlide/YlSlideSeajs.html)
-4.手动布局：[https://yanliangnh.github.io/YlSlide/manualLayout.html](https://yanliangnh.github.io/YlSlide/manualLayout.html) 
+4. 手动布局：[https://yanliangnh.github.io/YlSlide/manualLayout.html](https://yanliangnh.github.io/YlSlide/manualLayout.html) 
 ---
 
 ### 回调部分
